@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Example from "./component/ModalPop";
+// import Example from "./component/ModalPop";
+import ModalPop from "./component/ModalPop";
 import Navbar from "./component/Navbar";
-import List from "@mui/material/List";
-import Button from "@mui/material/Button";
-import ListItemComponent from "./component/ListItemComponent";
+import Footer from "./component/Footer";
+import ListComponent from "./component/ListComponent";
 import Chatbot from "./component/Chatbot";
 import { fetchData, deleteValue, addValue, editValue } from "./api/apiService";
 
@@ -53,15 +53,11 @@ function App() {
       alert("plase fill the input");
       return;
     }
-  
+
     setShow(false);
     addValue(inputValue);
     setInputValue("");
   };
-  
-
-  const buttonClass = "custom-button";
-  const footerClass = "footer";
 
   return (
     <>
@@ -70,7 +66,7 @@ function App() {
       <div className="parent">
         <div className="box">
           {show && (
-            <Example
+            <ModalPop
               isEdited={isEdited}
               setInputValue={setInputValue}
               editingItem={editingItem}
@@ -80,44 +76,21 @@ function App() {
               setYellow={setYellow}
             />
           )}
-          <List>
-            {data.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((item, index) => (
-              <ListItemComponent
-                key={index}
-                item={item}
-                index={index}
-                yellow={yellow}
-                handleEditClick={handleEditClick}
-                handleDeleteClick={handleDeleteClick}
-              />
-            ))}
-          </List>
-          <div className={footerClass}>
-            <Button variant="contained" color="primary" onClick={add}>
-              Add
-            </Button>
-          </div>
-          {data.length > itemsPerPage && (
-            <div className={buttonClass}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setPage(page - 1)}
-                disabled={page === 0}
-                className={buttonClass}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setPage(page + 1)}
-                disabled={page >= Math.ceil(data.length / itemsPerPage) - 1}
-              >
-                Next
-              </Button>
-            </div>
-          )}
+          <ListComponent
+            data={data}
+            page={page}
+            itemsPerPage={itemsPerPage}
+            handleEditClick={handleEditClick}
+            handleDeleteClick={handleDeleteClick}
+            yellow={yellow}
+          />
+          <Footer
+            add={add}
+            page={page}
+            setPage={setPage}
+            data={data}
+            itemsPerPage={itemsPerPage}
+          />
         </div>
       </div>
     </>

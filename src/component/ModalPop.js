@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 
-export default function Example(props) {
+export default function ModalPop(props) {
   const {inputValue, isEdited,setYellow ,setInputValue, open, addingNewItem, editingItem } = props;
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
