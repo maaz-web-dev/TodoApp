@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import Example from "./component/ModalPop";
-import Navbar from "./component/Navbar";
-import List from "@mui/material/List";
-import Button from "@mui/material/Button";
-import ListItemComponent from "./component/ListItemComponent";
-import Chatbot from "./component/Chatbot";
-import { fetchData, deleteValue, addValue, editValue } from "./api/apiService";
+import React, { useState } from 'react';
+import Example from './component/ModalPop';
+import Navbar from './component/Navbar';
+import List from '@mui/material/List';
+import Button from '@mui/material/Button';
+import ListItemComponent from './component/ListItemComponent';
+import Chatbot from './component/Chatbot';
+import { useTodoData } from './useTodoData';
+import { deleteValue, addValue, editValue } from './api/apiService';
 
 function App() {
-  const [yellow, setYellow] = useState(false);
-  const [show, setShow] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [isEdited, setIsEdited] = useState({ isEdited: false, itemId: null });
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const itemsPerPage = 10;
+  const {
+    data,
+    page,
+    setPage,
+    yellow,
+    setYellow,
+  } = useTodoData();
 
-  useEffect(() => {
-    fetchData()
-      .then((response) => {
-        if (Array.isArray(response.todos)) {
-          setData(response.todos.reverse());
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [data]);
+  const [show, setShow] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isEdited, setIsEdited] = useState({ isEdited: false, itemId: null });
+
   function add() {
     setIsEdited({ isEdited: false, itemId: null });
     setShow(true);
   }
+
   const handleDeleteClick = async (item) => {
     deleteValue(item._id);
   };
 
   const editingItem = async (todoId, updatedData) => {
     setShow(false);
-    setInputValue("");
+    setInputValue('');
     editValue(todoId, updatedData);
   };
 
@@ -51,11 +45,11 @@ function App() {
   const addingNewItem = () => {
     setShow(false);
     addValue(inputValue);
-    setInputValue("");
+    setInputValue('');
   };
 
-  const buttonClass = "custom-button";
-  const footerClass = "footer";
+  const buttonClass = 'custom-button';
+  const footerClass = 'footer';
 
   return (
     <>
@@ -75,7 +69,7 @@ function App() {
             />
           )}
           <List>
-            {data.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((item, index) => (
+            {data.slice(page * 10, (page + 1) * 10).map((item, index) => (
               <ListItemComponent
                 key={index}
                 item={item}
@@ -91,7 +85,7 @@ function App() {
               Add
             </Button>
           </div>
-          {data.length > itemsPerPage && (
+          {data.length > 10 && (
             <div className={buttonClass}>
               <Button
                 variant="contained"
@@ -106,7 +100,7 @@ function App() {
                 variant="contained"
                 color="primary"
                 onClick={() => setPage(page + 1)}
-                disabled={page >= Math.ceil(data.length / itemsPerPage) - 1}
+                disabled={page >= Math.ceil(data.length / 10) - 1}
               >
                 Next
               </Button>
@@ -116,6 +110,7 @@ function App() {
       </div>
     </>
   );
+
 }
 
 export default App;
