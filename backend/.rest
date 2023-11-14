@@ -1,0 +1,19 @@
+@baseURL = http://localhost:3001
+@itemID = "653ad0a2520fafbbe13c63ae"
+GET  {{baseURL}}/todos
+
+
+# DELETE request for item deletion
+DELETE "http://localhost:3001/todos/delete/653ad1800d40b3b31be310eb"
+### Send a POST request to add a to-do item
+POST http://localhost:3001/todos/addValue
+Content-Type: application/json
+
+{
+  "title": "new 10",
+  "description": "Milk, eggs, bread"
+}
+
+DELETE url HTTP/1.1
+
+
