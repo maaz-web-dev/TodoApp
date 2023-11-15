@@ -1,4 +1,4 @@
-// src/apiService/apiService.js
+
 import { API_ENDPOINTS } from '../api/api';
 
 async function handleResponse(response) {
