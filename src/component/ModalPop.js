@@ -17,7 +17,7 @@ const style = {
 };
 
 export default function ModalPop(props) {
-  const {inputValue, isEdited,setYellow ,setInputValue, open, addingNewItem, editingItem } = props;
+  const {inputValue, isEdited ,setInputValue, open, addingNewItem, editingItem } = props;
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -28,7 +28,7 @@ export default function ModalPop(props) {
     } else {
       addingNewItem();
     }
-    setYellow(true)
+    // setYellow(true)
     // Clear the input value by setting it to an empty string
     setInputValue('');
   };

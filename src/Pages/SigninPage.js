@@ -1,0 +1,104 @@
+import React, { useState } from 'react';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { useFacebookLogin } from 'react-facebook-login-hook';
+
+const SignInPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const handleSignIn = () => {
+    console.log('Signing in...');
+  };
+
+  const { login, isLoggingIn } = useFacebookLogin({
+    appId: 'your-facebook-app-id',
+    onSuccess: (response) => {
+      console.log('Logging in with Facebook:', response);
+    },
+    onError: (error) => {
+      console.error('Facebook login error:', error);
+    },
+  });
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
+          Sign In
+        </Typography>
+        <TextField
+          label="Email Address"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ marginTop: 2 }}
+          onClick={handleSignIn}
+        >
+          Sign In
+        </Button>
+        <Typography variant="body2" color="textSecondary" sx={{ marginTop: 2 }}>
+          Don't have an account? Sign up
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            marginTop: 2,
+            backgroundColor: '#1877f2',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onClick={login}
+          disabled={isLoggingIn}
+        >
+        
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M17 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22H12V14H9V11H12V8C12 5.79086 13.7909 4 16 4H19V7H17C15.8954 7 15 7.89543 15 9V11H18L17.5 14H15V22H19C20.1046 22 21 21.1046 21 20V4C21 2.89543 20.1046 2 19 2Z"
+              fill="white"
+            />
+            <path
+              d="M17.5 14H15V22H17.5C18.8807 22 20 20.8807 20 19.5C20 18.1193 18.8807 17 17.5 17H17V14Z"
+              fill="#1877f2"
+            />
+            <path
+              d="M16.1875 14.5V17H14.6875L14.25 19H16.1875L16.875 14.5H14.9375V14H16.1875V14.5Z"
+              fill="white"
+            />
+          </svg>
+          Login with Facebook
+        </Button>
+      </Paper>
+    </Container>
+  );
+};
+
+export default SignInPage;
