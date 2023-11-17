@@ -49,8 +49,8 @@ function Navbar() {
                 Sign Out
               </Button>
             ) : (
-              <Button color="inherit" component={Link} to="/signin">
-                Sign In
+              <Button color="inherit" component={Link} to="/SignUp">
+              Sign Up
               </Button>
             )}
           </Hidden>
