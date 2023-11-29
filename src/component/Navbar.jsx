@@ -49,9 +49,14 @@ function Navbar() {
                 Sign Out
               </Button>
             ) : (
+              <>
               <Button color="inherit" component={Link} to="/SignUp">
               Sign Up
               </Button>
+              <Button color="inherit" component={Link} to="/Signin">
+               Sign in
+              </Button>
+              </>
             )}
           </Hidden>
         </Toolbar>

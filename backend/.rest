@@ -6,14 +6,20 @@ GET  {{baseURL}}/todos
 # DELETE request for item deletion
 DELETE "http://localhost:3001/todos/delete/653ad1800d40b3b31be310eb"
 ### Send a POST request to add a to-do item
-POST http://localhost:3001/todos/addValue
+POST http://localhost:3001/auth/signup
 Content-Type: application/json
 
 {
-  "title": "new 10",
-  "description": "Milk, eggs, bread"
+  "username": "exampleUser",
+  "password": "examplePassword"
 }
 
 DELETE url HTTP/1.1
 
+# POST http://localhost:3001/auth/signup
+# Content-Type: application/json
 
+# {
+#   "username": "exampleUser",
+#   "password": "examplePassword"
+# }
