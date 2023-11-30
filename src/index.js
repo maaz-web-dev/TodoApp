@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AuthProvider } from './Utils/AuthContext';
 
 library.add(faComment);
 
@@ -13,7 +14,9 @@ library.add(faComment);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <AuthProvider>
     <App />
+  </AuthProvider>
   </React.StrictMode>
 );
 
