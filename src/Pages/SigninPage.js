@@ -10,10 +10,14 @@ import { useFacebookLogin } from 'react-facebook-login-hook';
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [error, setError] = useState('');
 
   const handleSignIn = () => {
-    console.log('Signing in...');
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+    setError('');
   };
 
   const { login, isLoggingIn } = useFacebookLogin({
@@ -27,9 +31,19 @@ const SignInPage = () => {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+      }}
+    >
       <CssBaseline />
-      <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Paper elevation={3} sx={{ padding: 4, width: '100%', maxWidth: 400 }}>
         <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
           Sign In
         </Typography>
@@ -53,6 +67,11 @@ const SignInPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {error && (
+          <Typography variant="body2" color="error" sx={{ marginTop: 1 }}>
+            {error}
+          </Typography>
+        )}
         <Button
           variant="contained"
           color="primary"
@@ -79,7 +98,6 @@ const SignInPage = () => {
           onClick={login}
           disabled={isLoggingIn}
         >
-        
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M17 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22H12V14H9V11H12V8C12 5.79086 13.7909 4 16 4H19V7H17C15.8954 7 15 7.89543 15 9V11H18L17.5 14H15V22H19C20.1046 22 21 21.1046 21 20V4C21 2.89543 20.1046 2 19 2Z"
