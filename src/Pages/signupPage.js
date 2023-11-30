@@ -7,6 +7,7 @@ import Link from  "@mui/material/Link"
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link as RouterLink } from 'react-router-dom'; 
+import Navbar from '../component/Navbar';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -40,6 +41,8 @@ const SignUpPage = () => {
   };
   
   return (
+    <>
+    <Navbar />
     <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <CssBaseline />
       <Paper elevation={3} sx={{ padding: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -86,6 +89,7 @@ const SignUpPage = () => {
       </Typography>
       </Paper>
     </Container>
+    </>
   );
 };
 

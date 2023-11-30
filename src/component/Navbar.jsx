@@ -9,12 +9,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Hidden from '@mui/material/Hidden';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Utils/AuthContext';
 
 function Navbar() {
   const isMobile = useMediaQuery('(max-width:600px)');
-
+  const { isLoggedIn, logout } = useAuth();
   // Replace these with your actual authentication logic
-  const isLoggedIn = false; // Change to true if the user is logged in
+  // Change to true if the user is logged in
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,6 +36,8 @@ function Navbar() {
             News
           </Typography>
           <Hidden smDown={!isMobile}>
+         { isLoggedIn && 
+          <>
             <Button color="inherit" component={Link} to="/">
               Home
             </Button>
@@ -44,8 +47,9 @@ function Navbar() {
             <Button color="inherit" component={Link} to="/contact">
               Contact
             </Button>
+          </>}
             {isLoggedIn ? (
-              <Button color="inherit" onClick={() => alert('Signing out')}>
+              <Button color="inherit" onClick={() =>logout()}>
                 Sign Out
               </Button>
             ) : (

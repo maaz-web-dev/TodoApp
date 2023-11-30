@@ -9,6 +9,9 @@ import { BrowserRouter as Router, Routes, Route , Navigate } from "react-router-
 import { useFacebookLogin } from 'react-facebook-login-hook';
 import { useNavigate } from 'react-router-dom';
 import {useAuth } from '../Utils/AuthContext'
+import Navbar from '../component/Navbar';
+import Link from  "@mui/material/Link"
+import { Link as RouterLink } from 'react-router-dom'; 
 
 const SignInPage = () => {
   const { Login } = useAuth();
@@ -110,6 +113,8 @@ const SignInPage = () => {
   });
 
   return (
+    <>
+    <Navbar />
     <Container
       component="main"
       maxWidth="xs"
@@ -161,7 +166,7 @@ const SignInPage = () => {
           Sign In
         </Button>
         <Typography variant="body2" color="textSecondary" sx={{ marginTop: 2 }}>
-          Don't have an account? Sign up
+          Don't have an account? <Link component={RouterLink} to="/signup">Sign up</Link> 
         </Typography>
         <Button
           variant="contained"
@@ -195,7 +200,9 @@ const SignInPage = () => {
         </Button>
       </Paper>
     </Container>
+    </>
   );
+  
 };
 
 export default SignInPage;
