@@ -5,7 +5,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { BrowserRouter as Router, Routes, Route , Navigate } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route , Navigate } from "react-router-dom";
+import { signInUser } from '../api/apiService';
 import { useFacebookLogin } from 'react-facebook-login-hook';
 import { useNavigate } from 'react-router-dom';
 import {useAuth } from '../Utils/AuthContext'
@@ -19,89 +20,29 @@ const SignInPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  // const handleSignIn = async () => {
-  //   if (!email || !password) {
-  //     setError('Please enter both email and password.');
-  //     return;
-  //   }
-  
-  //   try {
-  //     const response = await fetch('http://localhost:3001/todos/signin', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ username: email, password }),
-  //     });
-  
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       setError(errorData.error || 'Failed to sign in.');
-  //       return;
-  //     }
-  
-  //     const data = await response.json();
-  //     // Assuming your server sends a token upon successful sign-in
-  //     const token = data.token;
-  
-  //     // Handle successful sign-in (e.g., save the token to local storage)
-  //     // ...
-  
-  //     // Clear any previous error
-  //     setError('');
-  //   } catch (error) {
-  //     console.error('Error during sign-in:', error);
-  //     setError('Failed to sign in. Please try again.');
-  //   }
-  // };
   const handleSignIn = async () => {
-    console.log("hand le singinn ");
+    console.log("handling sign in");
     if (!email || !password) {
       setError('Please enter both email and password.');
       return;
     }
   
     try {
-      const response = await fetch('http://localhost:3001/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: email, password }),
-      });
+      const data = await signInUser(email, password);
   
-      if (!response.ok) {
-        // Check if the response is JSON
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.startsWith('application/json')) {
-          // Parse and display the error message
-          const errorData = await response.json();
-          setError(errorData.error || 'Failed to sign in.');
-        } else {
-          // If the response is not JSON, display a generic error
-          setError('Failed to sign in. Please try again.');
-        }
+      if (data.error) {
+        setError(data.error || 'Failed to sign in.');
         return;
       }
-  
-      const data = await response.json();
-      // Assuming your server sends a token upon successful sign-in
-      const token = data.token;
-  
-      // Handle successful sign-in (e.g., save the token to local storage)
-      // ...
-  
-      // Clear any previous error
+      // const token = data.token;
       Login();
-      navigate('/')
+      navigate('/');
       setError('');
-      
     } catch (error) {
       console.error('Error during sign-in:', error);
       setError('Failed to sign in. Please try again.');
     }
   };
-
   const { login, isLoggingIn } = useFacebookLogin({
     appId: 'your-facebook-app-id',
     onSuccess: (response) => {

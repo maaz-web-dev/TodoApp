@@ -30,6 +30,17 @@ export function addValue(title) {
     body: JSON.stringify(data),
   }).then(handleResponse);
 }
+export function signInUser(email, password) {
+  const userData = { username: email, password };
+
+  return fetch(API_ENDPOINTS.SIGN_IN, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  }).then(handleResponse);
+}
 export function editValue(todoId, title){
   const description ="default";
     return fetch(API_ENDPOINTS.EDIT_VALUE(todoId), {
